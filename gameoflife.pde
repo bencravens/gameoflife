@@ -1,5 +1,4 @@
-import gifAnimation.*;
-
+// Ben Cravens
 // 2D Array of objects
 Cell[][] grid;
 
