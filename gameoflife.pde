@@ -1,3 +1,5 @@
+import gifAnimation.*;
+
 // 2D Array of objects
 Cell[][] grid;
 
@@ -7,6 +9,24 @@ int rows = 40;
 
 void setup() {
   size(800,800);
+  // initialize glider for test case
+  // based on https://tinyurl.com/gliderguy
+  int[][] myArray;
+  myArray = new int[cols][rows];
+  for (int i=0; i<cols; i++) {
+      for (int j=0; j<rows; j++) {
+        //myArray[i][j] = int(random(0,2));
+        myArray[i][j] = 0;
+      }
+  }
+  for (int j=0; j<rows; j+=5) {
+    //initialize a bunch of gliders
+    myArray[j+0][2] = 1;
+    myArray[j+1][3] = 1;
+    myArray[j+2][1] = 1;
+    myArray[j+2][2] = 1;
+    myArray[j+2][3] = 1;
+  }
   print("\n\n\n\n\n\n\n\n");
   print("initializing\n");
   int cell_width = int(width/rows);
@@ -15,14 +35,16 @@ void setup() {
   for (int i = 0; i < cols; i++) {
     for (int j = 0; j < rows; j++) {
       // Initialize each object
-      int init_val = int(random(0,2));
+      int init_val = myArray[i][j];
       grid[i][j] = new Cell(i*cell_height,j*cell_width,cell_height,cell_width,init_val);
       grid[i][j].display();
     }
   }
+  
 }
 
 void draw() {
+  //delay(2000);
   background(0);
   // The counter variables i and j are also the column and row numbers and
   // are used as arguments to the constructor for each object in the grid.
@@ -42,7 +64,7 @@ void draw() {
   //count neighbours alive
   for (int i = 0; i < cols; i++) {
     for (int j = 0; j < rows; j++) {
-      print("entry " + i + "," + j + "\n");
+      //print("entry " + i + "," + j + "\n");
       int alive_guys = 0;
       //count neighbours
       for (int del_y=-1; del_y <= 1; del_y++) {
@@ -59,12 +81,12 @@ void draw() {
           }
         
           alive_guys += current[y_ind][x_ind];
-          print("["+y_ind+","+x_ind+"]");
+          //print("["+y_ind+","+x_ind+"]");
         }
-        print("\n");
+        //print("\n");
       }
       alive_guys -= current[i][j];
-      print("alive guys: "+alive_guys+"\n");
+      //print("alive guys: "+alive_guys+"\n");
       neighbours[i][j] = alive_guys;
     }
   }
@@ -88,6 +110,9 @@ void draw() {
       grid[i][j].display();
     }
   }
+  
+  //add frame to gif
+  
 }
 
 
